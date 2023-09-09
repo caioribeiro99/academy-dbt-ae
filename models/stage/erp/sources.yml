@@ -1,0 +1,36 @@
+version: 2
+
+sources:
+  - name: erp
+    description: Dados do SAP da Adventure Works.
+    schema: dbt_cribeiro
+    tables:
+      - name: salesreason
+        description: Tabela com dados do motivo de vendas
+      - name: customer
+        description: Tabela com informações sobre a conta do cliente
+      - name: person
+        description: Tabela com dados sobre as pessoas (clientes, vendedores, etc)
+      - name: salesperson
+        description: Tabela com informações dos vendedores
+      - name: employee
+        description: Tabela do RH com informações dos funcionários. Serão puxados apenas os dados que nos interessam quanto aos vendedores.
+      - name: stateprovince
+        description: Tabela com dados de estado/província para o pessoal, utilizada como auxiliar na construção das dimensões cliente e vendedores.
+      - name: address
+        description: Tabela com dados complementares de endereço para o pessoal. Utilizada também como auxiliar na construção das dimensões clientes e vendedores.
+      - name: countryregion
+        description: Tabela com dados sobre o país.
+      - name: salesorderheader
+        description: Tabela com informações acerca das vendas. A granularidade aqui é a nível de pedido.
+      - name: salesorderdetail
+        description: Tabela com informações detalhadas das vendas. A granularidade aqui é por item dos pedidos.
+      - name: product
+        description: Tabela com informações dos produtos. A granularidade, obviamente, é a nível de produto.
+        # columns:
+        #    - name: employee_id
+        #      description: Chave primária da tabela funcionários.
+        #      tests:
+        #       - unique
+        #       - not_null 
+
