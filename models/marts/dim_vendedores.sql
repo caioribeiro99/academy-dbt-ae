@@ -70,13 +70,21 @@ WITH
     , transformacao_final as (
         SELECT
             row_number() OVER (ORDER BY id_entidade_negocio) as sk_vendedor
-            ,* EXCEPT(nome_vendedor, sufixo)
+            , id_entidade_negocio
+            , id_nacionalidade
+            , id_territorio
+            , titulo_funcao
             , CASE
                 WHEN join_tabelas.sufixo != '' THEN
                     concat(join_tabelas.sufixo, ' ', join_tabelas.nome_vendedor)
                 ELSE
                     join_tabelas.nome_vendedor
             END AS nome_vendedor
+            , genero_funcionario
+            , data_contratacao
+            , modelo_contratacao
+            , funcionario_ativo
+            , tipo_pessoa
         FROM join_tabelas
     )
 
