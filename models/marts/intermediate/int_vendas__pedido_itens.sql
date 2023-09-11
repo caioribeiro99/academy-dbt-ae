@@ -29,9 +29,9 @@ WITH
             , pedidos.valor_frete
             , pedidos.valor_total_pedido
             , pedidos.num_revisao
-            , pedidos.data_pedido
-            , pedidos.data_pagamento
-            , pedidos.data_enviado
+            -- , pedidos.data_pedido
+            -- , pedidos.data_pagamento
+            -- , pedidos.data_enviado
             , pedidos.status_pedido
             , CASE WHEN
                 pedidos.flag_pedido_online is TRUE THEN 'Compra Online'
@@ -45,8 +45,8 @@ WITH
             , detalhe_pedidos.preco_unitario
             , detalhe_pedidos.desconto_preco_unitario
         FROM detalhe_pedidos
-        LEFT JOIN pedidos ON
-            detalhe_pedidos.id_pedido = pedidos.id_pedido 
+        LEFT JOIN pedidos 
+        ON detalhe_pedidos.id_pedido = pedidos.id_pedido 
     )
 
 SELECT *

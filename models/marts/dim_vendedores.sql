@@ -22,7 +22,11 @@ WITH
             , funcionarios.titulo_funcao
             , funcionarios.genero_funcionario
             , funcionarios.data_contratacao
-            , funcionarios.modelo_contratacao
+            , CASE 
+                WHEN funcionarios.modelo_contratacao = TRUE THEN 'Assalariado'
+              ELSE
+                'Horista'
+            END AS modelo_contratacao
             , funcionarios.funcionario_ativo
             , pessoas.tipo_pessoa
             , CASE
