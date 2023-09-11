@@ -2,7 +2,7 @@ WITH
     fonte_pais as (
         SELECT
             cast(countryregioncode as string) as codigo_pais
-            , cast(name as string) as `país`
+            , cast(name as string) as nome_pais
             , cast(modifieddate as timestamp) as data_ultima_atualizacao
         FROM {{ source('erp', 'countryregion') }}
     )
