@@ -74,7 +74,7 @@ WITH
     , transformacao_final as (
         SELECT
             row_number() OVER (ORDER BY id_entidade_negocio) as sk_vendedor
-            , id_entidade_negocio
+            , id_entidade_negocio as id_vendedor
             , id_nacionalidade
             , id_territorio
             , titulo_funcao
@@ -84,11 +84,17 @@ WITH
                 ELSE
                     join_tabelas.nome_vendedor
             END AS nome_vendedor
-            , genero_funcionario
+            , genero_funcionario as genero_vendedor
             , data_contratacao
-            , modelo_contratacao
+            , modelo_contratacao as modelo_contratacao_vendedor
             , funcionario_ativo
             , tipo_pessoa
+            , nivel_promocao_email
+            , cota_vendas
+            , bonus_vendedor
+            , taxa_comissao as taxa_comissao_vendedor
+            , valor_vendas_ano_passado
+            , valor_vendas_ytd
         FROM join_tabelas
     )
 

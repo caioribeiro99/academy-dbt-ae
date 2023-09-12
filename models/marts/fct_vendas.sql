@@ -1,0 +1,90 @@
+WITH
+    clientes as (
+        SELECT *
+        FROM {{ ref('dim_clientes') }}
+    )
+
+    , produtos as (
+        SELECT *
+        FROM {{ ref('dim_produtos') }}
+    )
+
+    , vendedores as (
+        SELECT *
+        FROM {{ ref('dim_vendedores') }}
+    )
+
+    , motivo_venda as (
+        SELECT *
+        FROM {{ ref('dim_motivo_venda') }}
+    )
+
+    , localizacao as (
+        SELECT *
+        FROM {{ ref('dim_localizacao') }}
+    )
+
+    , pedido_itens as (
+        SELECT *
+        FROM {{ ref('int_vendas__pedido_itens') }}
+    )
+
+    , join_tabelas as (
+        SELECT
+            pedido_itens.id_pedido
+            , produtos.id_produto as fk_produto
+            , produtos.id_subcategoria as fk_subcategoria
+            , pedido_itens.id_territorio as id_endereco_pedido
+            , pedido_itens.id_motivo_venda
+            , pedido_itens.id_vendedor
+            , pedido_itens.id_cliente
+            , pedido_itens.id_metodo_envio 
+            , pedido_itens.codigo_aprovacao_cartao
+            , pedido_itens.valor_subtotal_pedido
+            , pedido_itens.valor_imposto
+            , pedido_itens.valor_frete
+            , pedido_itens.valor_total_pedido
+            , pedido_itens.natureza_pedido
+            , pedido_itens.qtde_pedido
+            , pedido_itens.preco_unitario
+            , pedido_itens.desconto_preco_unitario
+            , pedido_itens.data_pedido
+            , pedido_itens.data_pagamento
+            , pedido_itens.data_enviado
+            , pedido_itens.status_pedido
+            , clientes.nome_cliente
+            , produtos.nome_produto
+            , produtos.custo_padrao
+            , produtos.dias_para_producao_produto
+            , produtos.linha_produto
+            , produtos.classe_produto
+            , produtos.estilo_produto
+            , produtos.data_inicio_venda
+            , produtos.data_fim_venda
+            , vendedores.titulo_funcao
+            , vendedores.genero_vendedor
+            , vendedores.modelo_contratacao_vendedor
+            , motivo_venda.motivo_venda
+            , motivo_venda.categoria_motivo_venda
+            , localizacao.endereco
+            , localizacao.codigo_postal
+            , localizacao.latitude
+            , localizacao.longitude
+            , localizacao.nome_pais
+            , localizacao.nome_estado
+        FROM pedido_itens
+        LEFT JOIN produtos
+            ON pedido_itens.id_produto = produtos.id_produto
+        LEFT JOIN clientes
+            ON pedido_itens.id_cliente = clientes.id_cliente
+        LEFT JOIN vendedores
+            ON pedido_itens.id_vendedor = vendedores.id_vendedor
+        LEFT JOIN motivo_venda
+            ON pedido_itens.id_motivo_venda = motivo_venda.id_motivo_venda
+        LEFT JOIN localizacao
+            ON pedido_itens.id_territorio = localizacao.id_territorio
+    )
+
+SELECT *
+FROM join_tabelas
+

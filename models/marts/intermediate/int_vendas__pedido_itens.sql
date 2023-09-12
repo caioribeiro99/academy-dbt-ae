@@ -9,12 +9,18 @@ WITH
         FROM {{ ref('stg_erp__detalhe_pedido') }}
     )
 
+    , motivo_vendas_pedido as (
+        SELECT *
+        FROM {{ ref('stg_erp__motivo_vendas_detalhe_pedidos') }}
+    )
+
     , vendas_pedido_itens as (
         SELECT
             pedidos.id_pedido
             , pedidos.id_cliente
             , pedidos.id_vendedor
             , pedidos.id_territorio
+            , motivo_vendas_pedido.id_motivo_venda
             , pedidos.id_endereco_cobranca
             , pedidos.id_endereco_entrega
             , pedidos.id_metodo_envio
@@ -29,10 +35,18 @@ WITH
             , pedidos.valor_frete
             , pedidos.valor_total_pedido
             , pedidos.num_revisao
-            -- , pedidos.data_pedido
-            -- , pedidos.data_pagamento
-            -- , pedidos.data_enviado
-            , pedidos.status_pedido
+            , pedidos.data_pedido
+            , pedidos.data_pagamento
+            , pedidos.data_enviado
+            , CASE
+                WHEN pedidos.status_pedido = 1 THEN 'Pedido Pendente'
+                WHEN pedidos.status_pedido = 2 THEN 'Processando'
+                WHEN pedidos.status_pedido = 3 THEN 'Aprovado'
+                WHEN pedidos.status_pedido = 4 THEN 'Enviado'
+                WHEN pedidos.status_pedido = 5 THEN 'Entregue'
+                WHEN pedidos.status_pedido = 6 THEN 'Concluído'
+                WHEN pedidos.status_pedido = 7 THEN 'Retornado'
+            END AS status_pedido
             , CASE WHEN
                 pedidos.flag_pedido_online is TRUE THEN 'Compra Online'
               ELSE
@@ -46,7 +60,9 @@ WITH
             , detalhe_pedidos.desconto_preco_unitario
         FROM detalhe_pedidos
         LEFT JOIN pedidos 
-        ON detalhe_pedidos.id_pedido = pedidos.id_pedido 
+            ON detalhe_pedidos.id_pedido = pedidos.id_pedido
+        LEFT JOIN motivo_vendas_pedido
+            ON detalhe_pedidos.id_pedido = motivo_vendas_pedido.id_pedido
     )
 
 SELECT *

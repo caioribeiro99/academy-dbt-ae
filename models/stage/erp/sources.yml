@@ -27,6 +27,10 @@ sources:
         description: Tabela com informações detalhadas das vendas. A granularidade aqui é por item dos pedidos.
       - name: product
         description: Tabela com informações dos produtos. A granularidade, obviamente, é a nível de produto.
+      - name: salesorderheadersalesreason
+        description: Tabela contendo a chave de relação do motivo de vendas para a tabela detalhe pedidos.
+      - name: store
+        description: Tabela contendo o nome das lojas associadas a pedidos e clientes.
         # columns:
         #    - name: employee_id
         #      description: Chave primária da tabela funcionários.
