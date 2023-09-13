@@ -34,12 +34,11 @@ WITH
             pedido_itens.id_pedido
             , produtos.id_produto as fk_produto
             , produtos.id_subcategoria as fk_subcategoria
+            -- , motivo_venda.id_motivo_venda as fk_motivo_venda
             , pedido_itens.id_territorio as id_endereco_pedido
-            , pedido_itens.id_motivo_venda
             , pedido_itens.id_vendedor
             , pedido_itens.id_cliente
             , pedido_itens.id_metodo_envio 
-            , pedido_itens.codigo_aprovacao_cartao
             , pedido_itens.valor_subtotal_pedido
             , pedido_itens.valor_imposto
             , pedido_itens.valor_frete
@@ -64,14 +63,14 @@ WITH
             , vendedores.titulo_funcao
             , vendedores.genero_vendedor
             , vendedores.modelo_contratacao_vendedor
-            , motivo_venda.motivo_venda
-            , motivo_venda.categoria_motivo_venda
-            , localizacao.endereco
-            , localizacao.codigo_postal
-            , localizacao.latitude
-            , localizacao.longitude
-            , localizacao.nome_pais
-            , localizacao.nome_estado
+            -- , motivo_venda.motivo_venda
+            -- , motivo_venda.categoria_motivo_venda
+            -- , localizacao.endereco
+            -- , localizacao.codigo_postal
+            -- , localizacao.latitude
+            -- , localizacao.longitude
+            -- , localizacao.nome_pais
+            -- , localizacao.nome_estado
         FROM pedido_itens
         LEFT JOIN produtos
             ON pedido_itens.id_produto = produtos.id_produto
@@ -79,10 +78,10 @@ WITH
             ON pedido_itens.id_cliente = clientes.id_cliente
         LEFT JOIN vendedores
             ON pedido_itens.id_vendedor = vendedores.id_vendedor
-        LEFT JOIN motivo_venda
-            ON pedido_itens.id_motivo_venda = motivo_venda.id_motivo_venda
-        LEFT JOIN localizacao
-            ON pedido_itens.id_territorio = localizacao.id_territorio
+        -- LEFT JOIN motivo_venda
+        --     ON pedido_itens.id_pedido = motivo_venda.id_pedido
+        -- LEFT JOIN localizacao
+        --     ON pedido_itens.id_territorio = localizacao.id_territorio
     )
 
 SELECT *

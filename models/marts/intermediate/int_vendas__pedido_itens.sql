@@ -9,18 +9,12 @@ WITH
         FROM {{ ref('stg_erp__detalhe_pedido') }}
     )
 
-    , motivo_vendas_pedido as (
-        SELECT *
-        FROM {{ ref('stg_erp__motivo_vendas_detalhe_pedidos') }}
-    )
-
     , vendas_pedido_itens as (
         SELECT
             pedidos.id_pedido
             , pedidos.id_cliente
-            , pedidos.id_vendedor
+            , coalesce(pedidos.id_vendedor, 999) as id_vendedor
             , pedidos.id_territorio
-            , motivo_vendas_pedido.id_motivo_venda
             , pedidos.id_endereco_cobranca
             , pedidos.id_endereco_entrega
             , pedidos.id_metodo_envio
@@ -60,9 +54,7 @@ WITH
             , detalhe_pedidos.desconto_preco_unitario
         FROM detalhe_pedidos
         LEFT JOIN pedidos 
-            ON detalhe_pedidos.id_pedido = pedidos.id_pedido
-        LEFT JOIN motivo_vendas_pedido
-            ON detalhe_pedidos.id_pedido = motivo_vendas_pedido.id_pedido
+        ON detalhe_pedidos.id_pedido = pedidos.id_pedido
     )
 
 SELECT *

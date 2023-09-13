@@ -98,6 +98,30 @@ WITH
         FROM join_tabelas
     )
 
+    , adicionar_vendedor_generico as (
+        SELECT
+            99 as sk_vendedor
+            , 999 as id_vendedor
+            , null as id_nacionalidade
+            , null as id_territorio
+            , 'Sales Representative' as titulo_funcao
+            , 'Vendedor Não Identificado' as nome_vendedor
+            , 'NAN' as genero_vendedor
+            , cast('2011-01-01' as date) as data_contratacao
+            , 'NAN' as modelo_contratacao
+            , true as funcionario_ativo
+            , 'SP' as tipo_pessoa
+            , 0 as nivel_promocao_email
+            , null as cota_vendas
+            , null as bonus_vendedor
+            , null as taxa_comissao_vendedor
+            , null as valor_vendas_ano_passado
+            , null as valor_vendas_ytd
+    )
+
 SELECT *
 FROM transformacao_final
+UNION ALL
+SELECT *
+FROM adicionar_vendedor_generico
 ORDER BY sk_vendedor
