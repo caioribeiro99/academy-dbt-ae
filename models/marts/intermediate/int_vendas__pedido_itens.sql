@@ -14,13 +14,26 @@ WITH
         FROM {{ ref('stg_erp__motivo_vendas_detalhe_pedidos') }}
     )
 
+    , status_motivo_vendas as (
+        SELECT 
+            *,
+            row_number() OVER (PARTITION BY id_pedido ORDER BY data_ultima_atualizacao DESC) as status_atualizacao
+        FROM motivo_venda
+    )
+
+    , filtrar_motivo_vendas as (
+        SELECT *
+        FROM status_motivo_vendas
+        WHERE status_atualizacao = 1
+    )
+
     , vendas_pedido_itens as (
         SELECT
             pedidos.id_pedido
             , pedidos.id_cliente
             , coalesce(pedidos.id_vendedor, 999) as id_vendedor
             , pedidos.id_territorio
-            , motivo_venda.id_motivo_venda
+            , coalesce(filtrar_motivo_vendas.id_motivo_venda, 999) as id_motivo_venda
             , pedidos.id_endereco_cobranca
             , pedidos.id_endereco_entrega
             , pedidos.id_metodo_envio
@@ -59,10 +72,10 @@ WITH
             , detalhe_pedidos.preco_unitario
             , detalhe_pedidos.desconto_preco_unitario
         FROM detalhe_pedidos
-        LEFT JOIN motivo_venda
-        ON detalhe_pedidos.id_pedido = motivo_venda.id_pedido
         LEFT JOIN pedidos 
         ON detalhe_pedidos.id_pedido = pedidos.id_pedido
+        LEFT JOIN filtrar_motivo_vendas
+        ON detalhe_pedidos.id_pedido = filtrar_motivo_vendas.id_pedido
     )
 
 SELECT *
