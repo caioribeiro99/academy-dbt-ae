@@ -85,6 +85,14 @@ WITH
             ON pedido_itens.id_endereco_cobranca = localizacao.id_endereco
     )
 
+    , transformacoes as (
+        SELECT
+            *
+            , (qtde_pedido * preco_unitario) as valor_total_negociado
+            , (qtde_pedido * preco_unitario * (1-desconto_preco_unitario)) as valot_total_negociado_liquido
+        FROM join_tabelas
+    )
+
 SELECT *
-FROM join_tabelas
+FROM transformacoes
 
