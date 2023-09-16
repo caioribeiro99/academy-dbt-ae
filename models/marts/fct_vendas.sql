@@ -87,7 +87,13 @@ WITH
 
     , transformacoes as (
         SELECT
-            *
+            {{dbt_utils.generate_surrogate_key(['id_pedido', 'fk_produto'])}} as sk_venda
+            , *
+            , CASE
+                WHEN desconto_preco_unitario > 0 THEN TRUE
+                WHEN desconto_preco_unitario = 0 THEN FALSE
+                ELSE FALSE
+            END AS eh_desconto
             , (qtde_pedido * preco_unitario) as valor_total_negociado
             , (qtde_pedido * preco_unitario * (1-desconto_preco_unitario)) as valot_total_negociado_liquido
         FROM join_tabelas

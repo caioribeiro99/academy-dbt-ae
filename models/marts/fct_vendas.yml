@@ -1,0 +1,177 @@
+version: 2
+
+models:
+  - name: fct_vendas
+    description: Essa é a dimensão com dados de vendas. A granularidade dessa tabela corresponde ao nível de detalhe dos pedidos (tabela fonte salesorderdetail).
+    columns:
+      - name: sk_venda
+        description: Essa é a surrogate key da tabela.
+        tests:
+          - unique
+          - not_null
+
+      - name: id_pedido
+        description: Essa é a coluna com o id dos pedidos.
+        tests:
+          - not_null
+
+      - name: fk_produto
+        description: Essa é a foreign key dos produtos. Sua fonte é a dimensão produtos.
+        tests:
+          - not_null
+
+      - name: fk_subcategoria
+        description: Essa é a foreign key da categoria dos subprotudos. Vem da dimensão produtos. Serve para relacionar com tabela de categoria de subprodutos, informação também contida na dimensão produto.
+        tests:
+          - not_null
+
+      - name: id_motivo_venda
+        description: Essa é o id que relaciona com a dimensão de motivo das vendas.
+        tests:
+          - not_null
+
+      - name: id_endereco_cobranca
+        description: Esse é o id que relaciona com a dimensão de localização.
+        tests:
+          - not_null
+
+      - name: id_territorio
+        description: Esse é o id que relaciona com informações de localização. Apesar de contraintuivo, essa não é a coluna que se relaciona com a dimensão de localização.
+        tests:
+          - not_null
+
+      - name: id_vendedor
+        description: Esse é o id que relaciona com a dimensão de vendedores.
+        tests:
+          - not_null
+
+      - name: id_cliente
+        description: Esse é o id que relaciona com a dimensão de clientes.
+        tests:
+          - not_null
+
+      - name: id_metodo_envio
+        description: Esse é o id que relaciona com tabelas sobre método de envio. Não contemplada nas dimensões desse projeto.
+        tests:
+          - not_null
+
+      - name: valor_subtotal_pedido
+        description: Essa é a coluna que traz o valor bruto por pedido, já descontado do valor do imposto e do valor do frete.
+        tests:
+          - not_null
+
+      - name: valor_imposto
+        description: Essa é a coluna que traz o valor de imposto por item do pedido.
+        tests:
+          - not_null
+
+      - name: valor_frete
+        description: Essa é a coluna que traz o valor de frete por item do pedido.
+        tests:
+          - not_null
+
+      - name: valor_total_pedido
+        description: Essa é a coluna com o valor bruto do pedido, sem os descontos do frete e do imposto.
+        tests:
+          - not_null
+
+      - name: natureza_pedido
+        description: Essa é a coluna que traz a descrição da natureza do pedido, se a compra é feito online ou por loja física.
+        tests:
+          - not_null
+
+      - name: qtde_pedido
+        description: Essa é a coluna que traz a quantidade de itens pedidos.
+        tests:
+          - not_null
+
+      - name: preco_unitario
+        description: Essa é a coluna que traz o preço unitário por item do pedido.
+        tests:
+          - not_null
+
+      - name: desconto_preco_unitario
+        description: Essa é a coluna que traz o desconto unitário por item do pedido.
+        tests:
+          - not_null
+
+      - name: data_pedido
+        description: Essa é a coluna que traz a data em que o pedido foi realizado.
+
+      - name: data_pagamento
+        description: Essa é a coluna que traz a data em que o pagamento do pedido foi realizado.
+
+      - name: data_enviado
+        description: Essa é a coluna que traz a data em que o pedido foi enviado.
+
+      - name: status_pedido
+        description: Essa é a coluna que traz o status mais atual do pedido. Os valores podem ser 'Pedido Pendente', 'Processando', 'Aprovado', 'Enviado', 'Entregue', 'Concluído', 'Retornado'
+
+      - name: nome_cliente
+        description: Essa é a coluna que traz o nome do cliente relacionado aquele pedido. Vem da dimensão de clientes.
+      
+      - name: nome_produto
+        description: Essa é a coluna que traz o nome do produto associado ao item do pedido.
+      
+      - name: custo_padrao
+        description: Essa é a coluna que traz o custo de fabricação associado ao item do pedido.
+
+      - name: dias_para_producao_produto
+        description: Essa é a coluna que traz a quantidade de dias necessária para produção do produto associado ao item do pedido.
+      
+      - name: linha_produto
+        description: Essa é a coluna que traz a linha de produto do produto associado ao item do pedido.
+
+      - name: classe_produto
+        description: Essa é a coluna que traz a classe de produto do produto associado ao item do pedido.
+
+      - name: estilo_produto
+        description: Essa é a coluna que traz o estilo de produto do produto associado ao item do pedido.
+
+      - name: data_inicio_venda
+        description: Essa é a coluna que traz o timestamp do inicio da venda.
+
+      - name: data_fim_venda
+        description: Essa é a coluna que traz o timestamp do fim da venda. As colunas em nulo representam vendas ainda em aberto no sistema.
+
+      - name: titulo_funcao
+        description: Essa é a coluna que traz o cargo do vendedor associado ao item do pedido. Os valores podem ser ou 'Sales Representative' ou 'Sales Representative Manager'. Vem da dimensão vendedores.
+      
+      - name: genero_vendedor
+        description: Essa é a coluna que traz o gênero do vendedor associado ao item do pedido. Vem da dimensão vendedores.
+      
+      - name: modelo_contratacao_vendedor
+        description: Essa é a coluna que traz o modelo de contratação do vendedor associado ao item do pedido. Os valores podem ser 'Assalariado' ou 'Prestador de Serviços'. Vem da dimensão vendedores.
+
+      - name: motivo_venda
+        description: Essa é a coluna que traz o motivo de venda cadastrado associado ao item do pedido. Vem da dimensão motivo venda.
+      
+      - name: categoria_motivo_venda
+        description: Essa é a coluna que traz a categoria do motivo de venda cadastrado associado ao item do pedido. Vem da dimensão motivo venda.
+
+      - name: endereco
+        description: Essa é a coluna que traz o endereço completo associado ao item do pedido. Vem da dimensão localização.
+      
+      - name: codigo_postal
+        description: Essa é a coluna que traz o código postal associado ao item do pedido. Vem da dimensão localização.
+      
+      - name: latitude
+        description: Essa é a coluna que traz a latitude associada ao item do pedido. Vem da dimensão localização.
+      
+      - name: longitude
+        description: Essa é a coluna que traz a longitude associada ao item do pedido. Vem da dimensão localização.
+
+      - name: nome_pais
+        description: Essa é a coluna que traz o nome do país associado ao item do pedido. Vem da dimensão localização.
+
+      - name: nome_estado
+        description: Essa é a coluna que traz o nome do estado associado ao item do pedido. Vem da dimensão localização.
+      
+      - name: eh_desconto
+        description: Essa é a coluna que traz o indicativo se ouve ou não desconto associado ao item do pedido. É uma métrica calculada na tabela.
+
+      - name: valor_total_negociado
+        description: Essa é a coluna que traz o valor total bruto negociado. Não leva em conta os descontos. É uma métrica calculada na tabela.
+      
+      - name: valor_total_negociado_liquido
+        description: Essa é a coluna que traz o valor total líquido negociado, já levando em conta os descontos. É uma métrica calculada na tabela.
