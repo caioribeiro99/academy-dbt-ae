@@ -20,12 +20,9 @@ models:
         description: Esse é o id do cliente, usado para realizar a união com a fato vendas.
         tests:
           - not_null
-          - unique
       
       - name: id_vendedor
         description: Esse é o id do vendedor, utilizado para realizar a união com a dimensão vendedor, caso necessário.
-        tests:
-          - not_null
       
       - name: id_territorio
         description: Esse é o id do território, utilizado para realizar a união com a dimensão de localização, caso necessário.

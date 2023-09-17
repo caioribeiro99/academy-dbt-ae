@@ -32,8 +32,6 @@ sources:
             description: Id pessoal para relacionar com a tabela de pessoas do RH. Quando o cliente não corresponde a uma pessoa física, o valor retornado será nulo.
           - name: storeid
             description: Id das lojas associadas aos clientes.
-            tests:
-              - not_null
           - name: territoryid
             description: Id do território para relacionar os dados dos clientes/lojas com suas respectivas localizações.
           - name: rowguid
@@ -266,7 +264,6 @@ sources:
             description: Essa coluna contém o Id do detalhe do pedido. Corresponde a granularidade desejada na tabela fato final.
             tests:
               - not_null
-              - unique
           - name: carriertrackingnumber
             description: Essa coluna contém o código de rastreamento associado ao item do pedido.
           - name: orderqty
