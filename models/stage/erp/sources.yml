@@ -6,35 +6,364 @@ sources:
     schema: dbt_cribeiro
     tables:
       - name: salesreason
-        description: Tabela com dados do motivo de vendas
+        description: Tabela com dados dos motivos de vendas.
+        columns:
+          - name: salesreasonid
+            description: Id da tabela para cada motivo de vendas.
+            tests:
+              - unique
+              - not_null
+          - name: name
+            description: Motivo de vendas.
+          - name: reasontype
+            description: Categoria associada ao motivo de vendas.
+          - name: modifieddate
+            description: Data da ultima modificação do registro.         
+        
       - name: customer
-        description: Tabela com informações sobre a conta do cliente
+        description: Tabela com informações sobre a conta do cliente.
+        columns:
+          - name: customerid
+            description: Id principal da tabela para cada cliente.
+            tests:
+              - unique
+              - not_null
+          - name: personid
+            description: Id pessoal para relacionar com a tabela de pessoas do RH. Quando o cliente não corresponde a uma pessoa física, o valor retornado será nulo.
+          - name: storeid
+            description: Id das lojas associadas aos clientes.
+            tests:
+              - not_null
+          - name: territoryid
+            description: Id do território para relacionar os dados dos clientes/lojas com suas respectivas localizações.
+          - name: rowguid
+            description: Coluna de id de identificação única para cada registro, caso seja necessário utilizar modelagem 'one-big-table'.
+            tests:
+              - unique
+              - not_null
+          - name: modifieddate
+            description: Data da ultima modificação do registro.
+
       - name: person
-        description: Tabela com dados sobre as pessoas (clientes, vendedores, etc)
+        description: Tabela com dados sobre as pessoas (clientes, vendedores, etc).
+        columns:
+          - name: businessentityid
+            description: Id da entidade de negócio, utilizado para relacionar-se com as várias tabelas que dependem de identificação pessoal.
+            tests:
+              - not_null
+              - unique
+          - name: persontype
+            description: Código departamental do tipo de pessoa cadastrada no sistema.
+          - name: namestyle
+            description: Identificador da ordem do nome. Nos casos em que a coluna marca true, o nome é exibido na forma inversa, trazendo o último nome na frente. Nos casos em que a coluna marca 'false', indica que o nome é escrito na forma padrão.
+          - name: title
+            description: Essa coluna apresenta o título de tratamento associado à pessoa.
+          - name: firstname
+            description: Essa coluna apresenta o primeiro nome da pessoa.
+          - name: middlename
+            description: Essa coluna apresenta o nome do meio da pessoa, caso haja.
+          - name: lastname
+            description: Essa coluna apresenta o último nome da pessoa.
+          - name: suffix
+            description: Essa coluna apresenta informações sobre o sufixo de tratamento do nome da pessoa, caso haja.
+          - name: emailpromotion
+            description: Essa coluna traz o nível de acesso a envio e recebimento de emails associado aquela pessoa.
+          - name: additionalcontactinfo
+            description: Essa coluna apresenta informações extras de contato através de um XML.
+          - name: demographics
+            description: Essa coluna apresenta informações demográficas adicionais sobre a pessoa, também em formato XML.
+
       - name: salesperson
         description: Tabela com informações dos vendedores
+        columns:
+          - name: businessentityid
+            description: Essa coluna apresenta o Id de identidade do negócio, registro único para cada indivíduo no sistema.
+            tests:
+              - unique
+              - not_null
+          - name: territoryid
+            description: Essa coluna apresenta o Id do território, utilizado para cruzar com informações de localização
+          - name: salesquota
+            description: Essa coluna representa a cota/meta de vendas atribuída a cada vendedor.
+          - name: bonus
+            description: Essa coluna representa o bônus disponível para o vendedor, caso a meta seja atendida.
+          - name: comissionpct
+            description: Essa coluna representa a taxa de comissão, em porcentagem, que um vendedor recebe de comissão sob o valor total de vendas que este gera.
+          - name: salesytd
+            description: Essa coluna representa o valor total de vendas que o vendedor realizou até a última atualização da tabela, considerando o ano fiscal corrente.
+          - name: saleslastyear
+            description: Essa coluna representa o valor total de vendas que o vendeddor realizou no último ano fiscal.
+          - name: rowguid
+            description: Coluna de id de identificação única para cada registro, caso seja necessário utilizar modelagem 'one-big-table'.
+          - name: modifieddate
+            description: Data da ultima modificação do registro.
+
       - name: employee
         description: Tabela do RH com informações dos funcionários. Serão puxados apenas os dados que nos interessam quanto aos vendedores.
+        columns:
+          - name: businessentityid
+            description: Essa coluna apresenta o Id de identidade do negócio, registro único para cada indivíduo no sistema.
+            tests:
+              - not_null
+              - unique
+          - name: nationalidnumber
+            description: Essa coluna apresenta o número de identidade nacional (análogo ao CPF) do funcionário.
+          - name: loginid
+            description: Essa coluna apresenta a URL de login no sistema ERP do SAP da Adventure Works de cada funcionário.
+          - name: jobtitle
+            description: Essa coluna traz o nome do cargo/função de cada funcionário.
+          - name: birthdate
+            description: Essa coluna traz a data de nascimento de cada funcionário.
+          - name: maritalstatus
+            description: Essa coluna traz um código de identificação sobre o status civil de cada funcionário.
+          - name: gender
+            description: Essa coluna traz informações quanto ao gênero do colaborador.
+          - name: hiredate
+            description: Essa coluna traz a data de contratação de cada colaborador.
+          - name: salariedflag
+            description: Essa coluna traz informações quanto ao modelo de contratação do colaborador; ou seja, se é assalariado/contratado ou horista.
+          - name: vacationhours
+            description: Essa coluna traz informações quanto a quantidade de horas de férias disponível para o colaborador.
+          - name: sickleavehours
+            description: Essa coluna traz informações quanto a quantidade de horas em que o colaborador esteve afastado por doença.
+          - name: currentflag
+            description: Essa coluna traz a identificação se o funcionário ainda está ativo ou não na organização.
+          - name: rowguid
+            description: Coluna de id de identificação única para cada registro, caso seja necessário utilizar modelagem 'one-big-table'.
+          - name: modifieddate
+            description: Data da ultima modificação do registro.
+          - name: organizationnode
+            description: Essa coluna contém informações sobre a hierarquia organizacional a qual um funcionário está associado. 
+          
       - name: stateprovince
         description: Tabela com dados de estado/província para o pessoal, utilizada como auxiliar na construção das dimensões cliente e vendedores.
+        columns:
+          - name: stateprovinceid
+            description: Essa coluna representa o Id do estado/província.
+            tests:
+              - unique
+              - not_null
+          - name: stateprovincecode
+            description: Essa coluna representa o código do estado/província.
+          - name: countryregioncode
+            description: Essa coluna representa o código do país.
+          - name: isonlystateprovinceflag
+            description: Essa coluna traz a identificação se o registro possui informações apenas sobre o estado/província.
+          - name: name
+            description: Essa coluna traz o nome do estado/província.
+          - name: territoryid
+            description: Essa coluna traz o Id do território
+            tests:
+              - not_null
+          - name: rowguid
+            description: Coluna de id de identificação única para cada registro, caso seja necessário utilizar modelagem 'one-big-table'.
+          - name: modifieddate
+            description: Data da ultima modificação do registro.
+
       - name: address
         description: Tabela com dados complementares de endereço para o pessoal. Utilizada também como auxiliar na construção das dimensões clientes e vendedores.
+        columns:
+          - name: addressid
+            description: Coluna com o Id do endereço.
+            tests:
+              - not_null
+              - unique
+          - name: addressline1
+            description: Coluna com informações principais do endereço.
+          - name: addressline2
+            description: Coluna com informações complementares do endereço.
+          - name: city
+            description: Coluna com o nome da cidade do endereço.
+          - name: stateprovinceid
+            description: Coluna com o Id do estado/província do endereço.
+          - name: postalcode
+            description: Coluna com o código postal do endereço.
+          - name: spatiallocation
+            description: Essa coluna contém informações das coordenadas geográficas que descrevem a localização física associada ao endereço.
+          - name: rowguid
+            description: Coluna de id de identificação única para cada registro, caso seja necessário utilizar modelagem 'one-big-table'.
+          - name: modifieddate
+            description: Data da ultima modificação do registro.
+
       - name: countryregion
         description: Tabela com dados sobre o país.
+        columns:
+          - name: countryregioncode
+            description: Coluna com o código do país.
+            tests:
+              - not_null
+              - unique
+          - name: name
+            description: Coluna com o nome do país.
+          - name: modifieddate
+            description: Data da ultima modificação do registro.
+  
       - name: salesorderheader
         description: Tabela com informações acerca das vendas. A granularidade aqui é a nível de pedido.
+        columns:
+          - name: salesorderid
+            description: Coluna com o Id do pedido.
+            tests:
+              - unique
+              - not_null
+          - name: revisionnumber
+            description: Essa coluna contém o número de revisões que foram feitas no pedido.
+          - name: orderdate
+            description: Essa coluna corresponde a data do pedido.
+          - name: duedate
+            description: Essa coluna corresponde a data de cobrança do pedido.
+          - name: shipdate
+            description: Essa coluna corresponde a data de envio do pedido.
+          - name: status
+            description: Essa coluna corresponde a uma coluna de valores multiclasse para o status do pedido.
+          - name: onlineorderflag
+            description: Essa coluna traz a identificação se o pedido foi feito online ou em loja física.
+          - name: purchaseordernumber
+            description: Essa coluna traz o código de identificação da ordem de compra.
+          - name: accountnumber
+            description: Essa coluna traz o número da conta associada ao pedido.
+          - name: customerid
+            description: Essa coluna traz o Id do cliente associado ao pedido.
+          - name: salespersonid
+            description: Essa coluna traz o Id do vendedor associado ao pedido.
+          - name: territoryid
+            description: Essa coluna traz o Id do território associado ao pedido.
+          - name: billtoaddressid
+            description: Essa coluna traz o Id da localização do endereço de cobrança associado ao pedido.
+          - name: shiptoaddressid
+            description: Essa coluna traz o Id da localização do endereço de entrega associado ao pedido.
+          - name: shipmethodid
+            description: Essa coluna traz o Id do método de envio associado ao pedido.
+          - name: creditcardid
+            description: Essa coluna traz o Id do cartão de crédito associado ao pedido.
+          - name: creditcardapprovalcode
+            description: Essa coluna traz o código de aprovação do pedido gerado pelo cartão de crédito, associado ao pedido.
+          - name: currencyrateid
+            description: Essa coluna traz o Id da taxa de câmbio associada ao pedido, caso seja o caso.
+          - name: subtotal
+            description: Essa coluna traz o valor subtotal do pedido, sem contar imposto e frete.
+          - name: taxamt
+            description: Essa coluna traz o valor de imposto associado ao pedido.
+          - name: freight
+            description: Essa coluna traz o valor de frete associado ao pedido.
+          - name: totaldue
+            description: Essa coluna traz o valor total do pedido.
+          - name: comment
+            description: Essa coluna traz os comentários deixados por clientes nos pedidos.
+          - name: rowguid
+            description: Coluna de id de identificação única para cada registro, caso seja necessário utilizar modelagem 'one-big-table'.
+          - name: modifieddate
+            description: Data da ultima modificação do registro.
+  
       - name: salesorderdetail
         description: Tabela com informações detalhadas das vendas. A granularidade aqui é por item dos pedidos.
+        columns:
+          - name: salesorderid
+            description: Essa coluna contém o Id do pedido.
+            tests:
+              - not_null
+          - name: salesorderdetail
+            description: Essa coluna contém o Id do detalhe do pedido. Corresponde a granularidade desejada na tabela fato final.
+            tests:
+              - not_null
+              - unique
+          - name: carriertrackingnumber
+            description: Essa coluna contém o código de rastreamento associado ao item do pedido.
+          - name: orderqty
+            description: Essa coluna contém a quantidade de itens associado ao item do pedido.
+          - name: productid
+            description: Essa coluna contém o Id do produto associado ao item do pedido.
+          - name: specialofferid
+            description: Essa coluna contém o Id da oferta especial associada ao item do pedido.
+          - name: unitprice
+            description: Essa coluna contém o preço de venda associado ao item do pedido.
+          - name: unitpricediscount
+            description: Essa coluna contém a taxa de desconto associada ao item do pedido.
+          - name: rowguid
+            description: Coluna de id de identificação única para cada registro, caso seja necessário utilizar modelagem 'one-big-table'.
+          - name: modifieddate
+            description: Data da ultima modificação do registro.
+              
       - name: product
         description: Tabela com informações dos produtos. A granularidade, obviamente, é a nível de produto.
+        columns:
+          - name: productid
+            description: Essa coluna contém o Id do produto.
+            tests:
+              - unique
+              - not_null
+          - name: name
+            description: Essa coluna contém o nome do produto.
+          - name: productnumber
+            description: Essa coluna contém o código de série associado ao produto.
+          - name: makeflag
+            description: Essa coluna contém um identificador se o produto é de fabricação interna da Adventure Works.
+          - name: finishedgoodsflag
+            description: Essa coluna contém um identificador para discretizar se o produto corresponde a um item acabado pronto para venda ou um componente intermediário de fabricação.
+          - name: color
+            description: Essa coluna contém a cor do produto.
+          - name: safetystocklevel
+            description: Essa coluna contém o estoque mínimo de segurança associado ao produto.
+          - name: reorderpoint
+            description: Essa coluna contém o ponto de pedido associado ao produto.
+          - name: standardcost
+            description: Essa coluna contém o custo de fabricação associado ao produto.
+          - name: listprice
+            description: Essa coluna contém o preço sugerido de venda pelo fabricante, associado ao produto.
+          - name: size
+            description: Essa coluna contém o valor do tamanho do produto.
+          - name: sizeunitmeasurecode
+            description: Essa coluna contém a unidade de medida do tamanho do produto.
+          - name: weightunitmeasurecode
+            description: Essa coluna contém a unidade de medida do peso do produto.
+          - name: weight
+            description: Essa coluna contém o peso do produto.
+          - name: productline
+            description: Essa coluna contém a linha do produto.
+          - name: class
+            description: Essa coluna contém a classe do produto.
+          - name: style
+            description: Essa coluna contém o estilo do produto.
+          - name: productsubcategoryid
+            description: Essa coluna contém o Id da subcategoria associada ao produto, caso haja.
+          - name: productmodelid
+            description: Essa coluna contém o Id do modelo associado ao produto, caso haja.
+          - name: sellstartdate
+            description: Essa coluna contém a data do início da venda do produto.
+          - name: sellenddate
+            description: Essa coluna contém a data do fim da venda do produto.
+          - name: discontinueddate
+            description: Essa coluna contém a data do descontinuamento do produto, caso seja o caso.
+          - name: rowguid
+            description: Coluna de id de identificação única para cada registro, caso seja necessário utilizar modelagem 'one-big-table'.
+          - name: modifieddate
+            description: Data da ultima modificação do registro.
+
       - name: salesorderheadersalesreason
         description: Tabela contendo a chave de relação do motivo de vendas para a tabela detalhe pedidos.
+        columns:
+          - name: salesorderid
+            description: Essa coluna contém o Id do pedido associado ao motivo da venda.
+            tests:
+              - unique
+          - name: salesreasonid
+            description: Essa coluna contém o Id do motivo da venda.
+          - name: modifieddate
+            description: Data da ultima modificação do registro.
+
       - name: store
         description: Tabela contendo o nome das lojas associadas a pedidos e clientes.
-        # columns:
-        #    - name: employee_id
-        #      description: Chave primária da tabela funcionários.
-        #      tests:
-        #       - unique
-        #       - not_null 
+        columns:
+          - name: businessentityid
+            description: Essa coluna traz o Id da entidade do negócio, utilizada em todo o sitema para discreminar usuários.
+          - name: name
+            description: Essa coluna traz o nome da loja
+          - name: salespersonid
+            description: Essa coluna traz o Id do vendedor associado à loja.
+          - name: demographcis
+            description: Essa coluna traz informações demográficas adicionais das lojas em formato XML.
+          - name: rowguid
+            description: Coluna de id de identificação única para cada registro, caso seja necessário utilizar modelagem 'one-big-table'.
+          - name: modifieddate
+            description: Data da ultima modificação do registro.
 
