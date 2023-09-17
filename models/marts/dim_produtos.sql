@@ -11,7 +11,11 @@ WITH
             , produtos.id_subcategoria
             , produtos.nome_produto
             , produtos.sku_produto
-            , produtos.flag_produto_acabado
+            , CASE
+                WHEN produtos.flag_produto_acabado = TRUE THEN 'Produto Acabado'
+              ELSE
+                'Componente Intermediário'
+            END AS tipo_produto
             , produtos.cor_produto
             , produtos.nivel_estoque_seguranca_minimo
             , produtos.ponto_de_pedido

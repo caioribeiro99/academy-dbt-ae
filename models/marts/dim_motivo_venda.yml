@@ -1,0 +1,26 @@
+version: 2
+
+models:
+  - name: dim_motivo_venda
+    description: Essa é a dimensão com dados sobre o motivo da venda.
+    columns:
+      - name: sk_motivo_venda
+        description: Essa é a surrogate key da tabela
+        tests:
+          - not_null
+          - unique
+
+      - name: id_motivo_venda
+        description: Esse é o id do motivo de venda associado ao pedido no join com a fatos vendas.
+        tests:
+          - not_null
+          - unique
+
+      - name: motivo_venda
+        description: Essa é a coluna que traz o motivo da venda.
+        
+      - name: categoria_motivo_venda
+        description: Essa é a coluna que traz a categoria do motivo da venda.
+      
+      - name: data_ultima_atualizacao
+        description: Essa é a coluna que traz a última atualização dos motivos de venda no sistema. Snapshots são configurados por aqui.

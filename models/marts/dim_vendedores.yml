@@ -1,0 +1,70 @@
+version: 2
+
+models:
+  - name: dim_vendedores
+    description: Essa é a dimensão dos vendedores da Adeventure Works.
+    columns:
+      - name: sk_vendedor
+        description: Essa é a surrogate key da tabela.
+        tests:
+          - not_null
+          - unique
+        
+      - name: id_vendedor
+        description: Essa é a coluna com o id do vendedores, utilizado para trazer informações pessoais da tabela do RH e para fazer join com as tabelas fatos.
+        tests:
+          - not_null
+          - unique
+        
+      - name: id_nacionalidade
+        description: Essa é a coluna com o id da nacionalidade do vendedor.
+
+      - name: id_territorio
+        description: Essa é a coluna com o id do território do vendedor.
+
+      - name: titulo_funcao
+        description: Essa é a coluna que traz o título da posição/cargo ocupado pelo vendedor.
+
+      - name: nome_vendedor
+        description: Essa é a coluna que traz o nome completo do vendedor. Nomes que não estão completos são porque estão faltando informações na tabela de informações pessoais do RH.
+
+      - name: genero_vendedor
+        description: Essa é a coluna que traz o gênero do vendedor.
+      
+      - name: data_contratacao
+        description: Essa coluna traz a data de contratação do vendedor.
+
+      - name: modelo_contratacao_vendedor
+        description: Essa coluna traz o modelo de contratação do vendedor. Os valores podem ser 'Assalariado' ou 'Horista'
+
+      - name: funcionario_ativo
+        description: Essa coluna traz a identificação se o vendedor ainda está ativo na empresa.
+
+      - name: tipo_pessoa
+        description: Essa coluna traz o código de identificação do tipo de pessoa, utilizada para discretização departamental do sistema de ERP da Adventure Works. Na dimensão vendedores, o único valor dessa coluna será 'SP', correspondendo a 'Sales Person'.
+        tests:
+          - accepted_values:
+              values:
+                - "SP"
+      
+      - name: nivel_promocao_email
+        description: Essa coluna traz informações quanto ao nível de acesso de recebimento de emails para aquele vendedor.
+
+      - name: cota_vendas
+        description: Essa coluna traz a meta de vendas associada ao vendedor. Os vendedores que ocupam posição de gerência não possuem metas de vendas.
+
+      - name: bonus_vendedor
+        description: Essa coluna traz o valor de bonus disponível ao vendedor, caso ele atinja sua meta de vendas.
+
+      - name: taxa_comissao_vendedor
+        description: Essa coluna traz a taxa de comissão em porcentagem que um vendedor recebe com base no total de valor de vendas que ele gera.
+
+      - name: valor_vendas_ano_passado
+        description: Essa coluna traz o montante total de vendas gerado pelo vendedor, no último ano.
+
+      - name: valor_vendas_ytd
+        description: Essa coluna traz o montante total de vendas gerado pelo vendedor, no ano atual, até a última data de atualização da tabela.
+    
+      
+              
+              

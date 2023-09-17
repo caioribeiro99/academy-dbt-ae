@@ -56,6 +56,7 @@ WITH
             , produtos.nome_produto
             , produtos.custo_padrao
             , produtos.dias_para_producao_produto
+            , produtos.tipo_produto
             , produtos.linha_produto
             , produtos.classe_produto
             , produtos.estilo_produto

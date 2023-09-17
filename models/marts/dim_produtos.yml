@@ -1,0 +1,84 @@
+version: 2
+
+models:
+  - name: dim_produtos
+    description: Essa é a dimensão que traz informações referentes aos diferentes produtos fabricados e comercializados pela Adventure Works.
+    columns:
+      - name: sk_produto
+        description: Essa é a surrogate key da tabela.
+        tests:
+          - unique
+          - not_null
+
+      - name: id_produto
+        description: Esse é o id do produto.
+        tests:
+          - unique
+          - not_null
+      
+      - name: id_subcategoria
+        description: Esse é o id da subcategoria do produto. Pode apresentar valores nulos pois nem todos produtos tem subcategorias. Não foi tratado a questão dos valores nulos pois não está sendo usado no join com a fato vendas.
+
+      - name: nome_produto
+        description: Esse é o nome do prouduto.
+
+      - name: sku_produto
+        description: Essa é o código de identificação único de cada produto.
+        tests:
+          - unique
+          - not_null
+        
+      - name: tipo_produto
+        description: Essa coluna traz a identificação se o o produto é um produto acabado ou se é um componente intermediário.
+
+      - name: cor_produto
+        description: Essa coluna traz informações quanto a cor do produto.
+
+      - name: nivel_estoque_seguranca_minimo
+        description: Essa coluna traz o nível de estoque de segurança mínimo para o produto.
+
+      - name: ponto_de_pedido
+        description: Essa coluna traz informações quanto ao ponto de pedido do produto; ou seja, o número de unidades em estoque no qual se recomenda realizar a reposição do mesmo.
+
+      - name: custo_padrao
+        description: Essa coluna traz informações quanto ao custo padrão de fabricação do produto.
+
+      - name: preco_venda_sugerido
+        description: Essa coluna traz informações quanto ao preço de venda sugerido do fabricante ao público final.
+
+      - name: tamanho_produto
+        description: Essa coluna traz informações quanto ao tamanho do produto, em valores absolutos.
+
+      - name: unidade_medida_tamanho_produto
+        description: Essa coluna traz informações quanto a unidade de medida do tamanho do produto.
+      
+      - name: peso_produto
+        description: Essa coluna traz informações quanto ao peso do produto, em valores absolutos.
+        
+      - name: unidade_medida_peso_produto
+        description: Essa coluna traz informações quanto a unidade de medida do peso do produto.
+
+      - name: dias_para_producao_produto
+        description: Essa coluna traz o número de dias aproximado para a produção do produto (corresponde ao lead time de fabricação).
+
+      - name: linha_produto
+        description: Essa coluna traz informações quanto a linha do produto.
+
+      - name: classe_produto
+        description: Essa coluna traz informações quanto a classe do produto.
+      
+      - name: estilo_produto
+        description: Essa coluna traz informações quanto ao estilo do produto.
+
+      - name: data_inicio_venda
+        description: Essa coluna traz informações quanto a data do início da venda do produto.
+
+      - name: data_fim_venda
+        description: Essa coluna traz informações quanto a data do fim da venda do produto. Valores nulos estão associados aos produtos que ainda não são produtos acabados.
+
+      - name: data_descontinuacao_produto
+        description: Essa coluna traz a data de descontinuação do produto, caso seja o caso.
+      
+      
+              
+              

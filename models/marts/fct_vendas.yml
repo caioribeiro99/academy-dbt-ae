@@ -118,6 +118,9 @@ models:
 
       - name: dias_para_producao_produto
         description: Essa é a coluna que traz a quantidade de dias necessária para produção do produto associado ao item do pedido.
+
+      - name: tipo_produto
+        description: Essa é a coluna que traz a identificação do tipo de produto produzido, se é um produto acabado, pronto para a venda, ou se é um componente intermediário.
       
       - name: linha_produto
         description: Essa é a coluna que traz a linha de produto do produto associado ao item do pedido.

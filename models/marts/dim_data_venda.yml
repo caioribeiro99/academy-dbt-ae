@@ -1,0 +1,57 @@
+version: 2
+
+models:
+  - name: dim_data_venda
+    description: Essa é a dimensão com dados sobre a data das transações dos pedidos. Não está sendo utilizada na fato vendas pois a tabela intermediária já está trazendo as informações necessárias.
+    columns:
+      - name: sk_data_venda
+        description: Essa é a surrogate key da tabela.
+        tests:
+          - not_null
+          - unique
+      
+      - name: id_pedido
+        description: Esse é o id do cliente, usado para realizar a união com a fato vendas.
+        tests:
+          - not_null
+          - unique
+
+      - name: id_cliente
+        description: Esse é o id do cliente, usado para realizar a união com a fato vendas.
+        tests:
+          - not_null
+          - unique
+      
+      - name: id_vendedor
+        description: Esse é o id do vendedor, utilizado para realizar a união com a dimensão vendedor, caso necessário.
+        tests:
+          - not_null
+      
+      - name: id_territorio
+        description: Esse é o id do território, utilizado para realizar a união com a dimensão de localização, caso necessário.
+
+      - name: id_endereco_cobranca
+        description: Esse é o id do endereço de cobrança associado ao pedido.
+
+      - name: id_endereco_entrega
+        description: Esse é o id do endereço de entrega associado ao pedido.
+      
+      - name: id_metodo_envio
+        description: Esse é o id do método de envio.
+
+      - name: id_cartão
+        description: Esse é o id do cartão associado ao pagamento do pedido.
+      
+      - name: id_taxa_cambio
+        description: Essa coluna traz o id da taxa de câmbio equivalente ao pagamento do pedido, caso seja o caso do pedido em questão.
+      
+      - name: data_pedido
+        description: Essa coluna traz o valor da data do pedido.
+
+      - name: data_pagamento
+        description: Essa coluna traz o valor da data do pagamento do pedido.
+
+      - name: data_enviado
+        description: Essa coluna traz o valor da data de envio do pedido.
+              
+              

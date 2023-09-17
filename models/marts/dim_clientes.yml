@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: dim_clientes
+    description: Essa é a dimensão com dados sobre os clientes.
+    columns:
+      - name: sk_cliente
+        description: Essa é a surrogate key da tabela.
+        tests:
+          - unique
+          - not_null
+
+      - name: id_cliente
+        description: Esse é o id do cliente, usado para realizar a união com a fato vendas.
+        tests:
+          - unique
+          - not_null
+      
+      - name: id_pessoa
+        description: Esse é o id pessoal, utilizado para trazer informações da tabela de pessoas do RH para construção da dimensão clientes. Pode haver valores nulos, pois existem clientes os quais existem apenas a correspondencia da loja, ou seja, clientes B2B.
+        tests:
+          - unique
+
+      - name: id_loja
+        description: Esse é o id correspondente a loja.
+      
+      - name: id_territorio
+        description: Esse é o id correspondente ao territorio. Pode ser utilizado para cruzar informações com a dimensão de localização.
+
+      - name: nome_cliente
+        description: Essa coluna traz o nome do cliente.
+      
+      - name: nome_loja
+        description: Essa coluna traz o nome da loja.
+
+      - name: nivel_promocao_email
+        description: Essa coluna traz o nível de acesso de promoção ao email.

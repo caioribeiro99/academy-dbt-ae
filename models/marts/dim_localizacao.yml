@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: dim_localizacao
+    description: Essa é a dimensão com dados sobre a localização dos pedidos.
+    columns:
+      - name: sk_localizacao
+        description: Essa é a surrogate key da tabela.
+        tests:
+          - not_null
+          - unique
+                    
+      - name: id_endereco
+        description: Esse é o id do endereço associado ao pedido.
+        tests:
+          - not_null
+          - unique
+
+      - name: id_estado
+        description: Esse é o id do estado do endereço associado ao pedido.
+        tests:
+          - not_null
+
+      - name: id_territorio
+        description: Esse é o id da província do endereço associado ao pedido.
+        tests:
+          - not_null            
+
+      - name: endereco
+        description: Esse é o endereço completo associado ao pedido.
+
+      - name: cidade
+        description: Esse é a cidade do endereço associado ao pedido.
+
+      - name: codigo_postal
+        description: Esse é o código postal do endereço associado ao pedido.
+
+      - name: latitude
+        description: Essas são as coordenadas de latitude do endereço associado ao pedido.
+
+      - name: longitude
+        description: Essas são as coordenadas de longitude do endereço associado ao pedido.
+
+      - name: estado
+        description: Esse é o código do estado do endereço associado ao pedido.
+      
+      - name: nome_estado
+        description: Esse é o nome completo do estado do endereço associado ao pedido.
+
+      - name: pais
+        description: Esse é o código do país do endereço associado ao pedido.
+      
+      - name: nome_pais
+        description: Esse é o nome completo do país do endereço associado ao pedido.
