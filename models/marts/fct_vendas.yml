@@ -49,6 +49,11 @@ models:
         description: Esse é o id que relaciona com a dimensão de clientes.
         tests:
           - not_null
+        
+      - name: id_cartao
+        description: Essa é o id que relaciona com a dimensão de cartão de crédito.
+        tests:
+          - not_null
 
       - name: id_metodo_envio
         description: Esse é o id que relaciona com tabelas sobre método de envio. Não contemplada nas dimensões desse projeto.

@@ -363,4 +363,26 @@ sources:
             description: Coluna de id de identificação única para cada registro, caso seja necessário utilizar modelagem 'one-big-table'.
           - name: modifieddate
             description: Data da ultima modificação do registro.
+        
+      - name: creditcard
+        description: Tabela com os dados de cartão de crédito associado aos pedidos da Adventure Works.
+        columns:
+          - name: creditcardid
+            description: Id dos cartões de crédito. É a unique key da tabela.
+            tests:
+              - unique
+              - not_null
+          - name: cardtype
+            description: Tipo de cartão associado ao cartão de crédito.
+          - name: cardnumber
+            description: Número do cartão de crédito.      
+          - name: expmonth
+            description: Mês de expiração do cartão de crédito.
+          - name: expyear
+            description: Ano de expiração do cartão de crédito.
+          - name: modifieddate
+            description: Data da ultima modificação do registro.
+
+            
+        
 

@@ -24,6 +24,11 @@ WITH
         FROM {{ ref('dim_localizacao') }}
     )
 
+    , cartao_de_credito as (
+        SELECT *
+        FROM  {{ ref('dim_cartao_de_credito') }}
+    )
+
     , pedido_itens as (
         SELECT *
         FROM {{ ref('int_vendas__pedido_itens') }}
@@ -36,6 +41,7 @@ WITH
             , produtos.id_subcategoria as fk_subcategoria
             , pedido_itens.id_motivo_venda
             , pedido_itens.id_endereco_cobranca
+            , pedido_itens.id_cartao
             , pedido_itens.id_territorio
             , pedido_itens.id_vendedor
             , pedido_itens.id_cliente
@@ -84,6 +90,8 @@ WITH
             ON pedido_itens.id_motivo_venda = motivo_venda.id_motivo_venda
         LEFT JOIN localizacao
             ON pedido_itens.id_endereco_cobranca = localizacao.id_endereco
+        LEFT JOIN cartao_de_credito
+            ON pedido_itens.id_cartao = cartao_de_credito.id_cartao
     )
 
     , transformacoes as (

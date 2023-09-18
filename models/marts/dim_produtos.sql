@@ -1,11 +1,11 @@
 WITH
-    produtos as (
+    fonte_produtos as (
         SELECT *
         , 
         FROM {{ ref('stg_erp__produtos') }}
     )
 
-    , join_tabelas as (
+    , produtos as (
         SELECT
             produtos.id_produto
             , produtos.id_subcategoria
@@ -39,7 +39,7 @@ WITH
         SELECT
             row_number() OVER (ORDER BY id_produto) as sk_produto
             , *
-        FROM join_tabelas
+        FROM produtos
     )
 
 SELECT *

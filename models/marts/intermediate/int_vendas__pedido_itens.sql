@@ -37,7 +37,7 @@ WITH
             , pedidos.id_endereco_cobranca
             , pedidos.id_endereco_entrega
             , pedidos.id_metodo_envio
-            , pedidos.id_cartao
+            , coalesce(pedidos.id_cartao, 99999) as id_cartao
             , pedidos.id_taxa_cambio
             , detalhe_pedidos.id_detalhe_pedido
             , detalhe_pedidos.id_produto
