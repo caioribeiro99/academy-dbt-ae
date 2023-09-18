@@ -73,6 +73,7 @@ WITH
             , vendedores.modelo_contratacao_vendedor
             , motivo_venda.motivo_venda
             , motivo_venda.categoria_motivo_venda
+            , cartao_de_credito.tipo_cartao
             , localizacao.endereco
             , localizacao.codigo_postal
             , localizacao.latitude

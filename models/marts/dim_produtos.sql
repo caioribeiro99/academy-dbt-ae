@@ -7,32 +7,32 @@ WITH
 
     , produtos as (
         SELECT
-            produtos.id_produto
-            , produtos.id_subcategoria
-            , produtos.nome_produto
-            , produtos.sku_produto
+            id_produto
+            , id_subcategoria
+            , nome_produto
+            , sku_produto
             , CASE
-                WHEN produtos.flag_produto_acabado = TRUE THEN 'Produto Acabado'
+                WHEN flag_produto_acabado = TRUE THEN 'Produto Acabado'
               ELSE
                 'Componente Intermediário'
             END AS tipo_produto
-            , produtos.cor_produto
-            , produtos.nivel_estoque_seguranca_minimo
-            , produtos.ponto_de_pedido
-            , produtos.custo_padrao
-            , produtos.preco_venda_sugerido
-            , produtos.tamanho_produto
-            , produtos.unidade_medida_tamanho_produto
-            , produtos.peso_produto
-            , produtos.unidade_medida_peso_produto
-            , produtos.dias_para_producao_produto
-            , produtos.linha_produto
-            , produtos.classe_produto
-            , produtos.estilo_produto
-            , produtos.data_inicio_venda
-            , produtos.data_fim_venda
-            , produtos.data_descontinuacao_produto
-        FROM produtos
+            , cor_produto
+            , nivel_estoque_seguranca_minimo
+            , ponto_de_pedido
+            , custo_padrao
+            , preco_venda_sugerido
+            , tamanho_produto
+            , unidade_medida_tamanho_produto
+            , peso_produto
+            , unidade_medida_peso_produto
+            , dias_para_producao_produto
+            , linha_produto
+            , classe_produto
+            , estilo_produto
+            , data_inicio_venda
+            , data_fim_venda
+            , data_descontinuacao_produto
+        FROM fonte_produtos
     )
 
     , transformacoes as (

@@ -157,6 +157,9 @@ models:
       - name: categoria_motivo_venda
         description: Essa é a coluna que traz a categoria do motivo de venda cadastrado associado ao item do pedido. Vem da dimensão motivo venda.
 
+      - name: tipo_cartao
+        description: Essa é a coluna que traz o tipo de cartão de crédito associado ao item do pedido, caso seja o caso.
+
       - name: endereco
         description: Essa é a coluna que traz o endereço completo associado ao item do pedido. Vem da dimensão localização.
       
