@@ -68,6 +68,7 @@ WITH
             , produtos.estilo_produto
             , produtos.data_inicio_venda
             , produtos.data_fim_venda
+            , vendedores.nome_vendedor
             , vendedores.titulo_funcao
             , vendedores.genero_vendedor
             , vendedores.modelo_contratacao_vendedor

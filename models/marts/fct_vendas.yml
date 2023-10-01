@@ -142,6 +142,9 @@ models:
       - name: data_fim_venda
         description: Essa é a coluna que traz o timestamp do fim da venda. As colunas em nulo representam vendas ainda em aberto no sistema.
 
+      - name: nome_vendedor
+        description: Essa é a coluna que traz o nome do vendedor associado ao pedido item.
+
       - name: titulo_funcao
         description: Essa é a coluna que traz o cargo do vendedor associado ao item do pedido. Os valores podem ser ou 'Sales Representative' ou 'Sales Representative Manager'. Vem da dimensão vendedores.
       
@@ -165,6 +168,9 @@ models:
       
       - name: codigo_postal
         description: Essa é a coluna que traz o código postal associado ao item do pedido. Vem da dimensão localização.
+
+      - name: cidade
+        description: Essa é a coluna que traz o nome da cidade associada ao pedido item.
       
       - name: latitude
         description: Essa é a coluna que traz a latitude associada ao item do pedido. Vem da dimensão localização.
