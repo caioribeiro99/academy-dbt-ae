@@ -76,10 +76,13 @@ WITH
             , cartao_de_credito.tipo_cartao
             , localizacao.endereco
             , localizacao.codigo_postal
+            , localizacao.cidade
             , localizacao.latitude
             , localizacao.longitude
             , localizacao.nome_pais
+            , localizacao.pais as codigo_pais
             , localizacao.nome_estado
+            , localizacao.estado as codigo_estado
         FROM pedido_itens
         LEFT JOIN produtos
             ON pedido_itens.id_produto = produtos.id_produto
